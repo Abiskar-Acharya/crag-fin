@@ -6,5 +6,15 @@ def test_package_imports():
 
 
 def test_subpackages_import():
-    from crag_fin import decomposer, retriever, reasoner, calibrator, auditor, tools, eval, baselines
+    from crag_fin import (  # noqa: F401
+        adversarial,
+        auditor,
+        baselines,
+        calibrator,
+        decomposer,
+        eval,
+        reasoner,
+        retriever,
+        tools,
+    )
     # if any of these blow up, the __init__.py files have a problem
