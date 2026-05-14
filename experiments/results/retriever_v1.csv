@@ -1,0 +1,3 @@
+run,mode,n,macro_f1,accuracy,abstention_rate,date
+run_001_uniform_vs_weighted/uniform_n20,uniform,20,0.133,0.250,1.000,2026-05-14
+run_001_uniform_vs_weighted/weighted_n20,weighted,20,0.133,0.250,1.000,2026-05-14

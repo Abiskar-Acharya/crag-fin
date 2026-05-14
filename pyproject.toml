@@ -55,6 +55,7 @@ python-dotenv = ">=1.0"
 # Structured LLM output
 outlines = ">=0.0.45"
 feedparser = "^6.0.12"
+tldextract = "^5.3.1"
 
 [tool.poetry.group.dev.dependencies]
 pytest = ">=8.2"
