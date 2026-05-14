@@ -2,7 +2,30 @@
 
 A **C**alibrated, source-credibility-weighted, **R**etrieval-**A**ugmented, a**G**entic verifier for **FIN**ancial misinformation.
 
-> **Status:** Prototype, May 2026. Not for production use.
+> **Status:** Prototype, Phase 1 complete (May 2026). Not for production use.
+
+## What's wired today (Phase 1 — Days 1–3)
+
+| Component | Status | Implementation |
+|---|---|---|
+| Decomposer | ✅ wired | `src/crag_fin/decomposer/decompose.py` — qwen2.5:7b, 3-shot, JSON-only |
+| Source-credibility prior | ✅ wired | `src/crag_fin/retriever/credibility_prior.py` — 4-tier, 30 sources |
+| Retriever (credibility-weighted) | ✅ wired | `src/crag_fin/retriever/arxivmind_adapter.py` — adapts ArXivMind; rank-decayed weighting |
+| News index | ✅ seeded | 180 chunks across Bloomberg / FT / WSJ / BBC / Guardian / SeekingAlpha (Day 2) |
+| Reasoner (single-agent) | ✅ wired | `src/crag_fin/reasoner/single_agent.py` — glm-4.7-flash, JSON output |
+| End-to-end pipeline | ✅ wired | `src/crag_fin/pipeline.py` — `verify_claim()` orchestrates the above |
+| Threshold abstention | ✅ placeholder | UNCERTAIN/mixed → ABSTAIN. Replaced by conformal in Phase 7 (Day 19+) |
+| CN6000 RoBERTa baseline | ✅ Year-1 hook | `src/crag_fin/baselines/roberta_cn6000.py` — score collapse [0.50, 0.54] on Fin-Fact 50 |
+| Conformal calibrator | ⏳ Phase 7 (Day 19–21) | scaffold present, empty |
+| PRISM auditor | ⏳ Phase 8 (Day 22–24) | scaffold present, empty |
+
+**Demo:** `notebooks/03_day3_pipeline_demo.ipynb` runs 3 claims end-to-end:
+
+| Claim | Expected | Got | Why |
+|---|---|---|---|
+| *Amazon stock approaching $3T valuation on AI* | TRUE | **TRUE** | Bloomberg cite (rank 1) confirms |
+| *GameStop bid $100B for eBay* | FALSE | **FALSE** | Guardian cite shows $55.5bn, contradicting $100B |
+| *Apple beat Q3 earnings estimates* | ABSTAIN | **ABSTAIN** | No Apple coverage in index → reasoner abstains correctly |
 
 ## What this is
 
