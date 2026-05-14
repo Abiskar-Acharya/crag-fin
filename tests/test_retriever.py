@@ -19,6 +19,15 @@ def test_passage_dataclass_round_trip() -> None:
     p = Passage(text="hello", source="test", score=0.5)
     assert p.text == "hello"
     assert p.section == ""
+    assert p.credibility == 1.0
+    assert p.weighted_score is None
+
+
+def test_passage_carries_credibility() -> None:
+    from crag_fin.retriever.passage import Passage
+
+    p = Passage(text="t", source="reuters.com", score=0.8, credibility=1.0, weighted_score=0.8)
+    assert p.weighted_score == 0.8
 
 
 def test_arxivmind_retrieve_returns_at_most_k() -> None:

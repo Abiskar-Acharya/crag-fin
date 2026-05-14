@@ -1,0 +1,63 @@
+# Financial-news RSS feeds for the Day-2 seed of the crag_fin_news_v0 ChromaDB collection.
+# Tier values track the hand-coded credibility prior in src/crag_fin/retriever/credibility_prior.py.
+# Maintainer note: news outlets break/rename RSS endpoints often. If a feed 404s, log + skip;
+# do not let one bad source block the seed.
+
+feeds:
+  # Tier 1 — wires + tier-1 broadsheet (credibility = 1.0)
+  - name: Reuters Business
+    url: https://feeds.reuters.com/reuters/businessNews
+    tier: 1
+    domain: reuters.com
+  - name: Reuters World
+    url: https://feeds.reuters.com/Reuters/worldNews
+    tier: 1
+    domain: reuters.com
+  - name: Bloomberg Markets
+    url: https://feeds.bloomberg.com/markets/news.rss
+    tier: 1
+    domain: bloomberg.com
+  - name: FT Companies
+    url: https://www.ft.com/companies?format=rss
+    tier: 1
+    domain: ft.com
+  - name: WSJ Markets
+    url: https://feeds.a.dj.com/rss/RSSMarketsMain.xml
+    tier: 1
+    domain: wsj.com
+  - name: AP Business
+    url: https://rsshub.app/apnews/topics/business
+    tier: 1
+    domain: apnews.com
+
+  # Tier 2 — mainstream broadsheet (credibility = 0.7)
+  - name: BBC Business
+    url: https://feeds.bbci.co.uk/news/business/rss.xml
+    tier: 2
+    domain: bbc.co.uk
+  - name: Guardian Business
+    url: https://www.theguardian.com/uk/business/rss
+    tier: 2
+    domain: theguardian.com
+  - name: Telegraph Business
+    url: https://www.telegraph.co.uk/business/rss.xml
+    tier: 2
+    domain: telegraph.co.uk
+  - name: CNBC Top News
+    url: https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=100003114
+    tier: 2
+    domain: cnbc.com
+
+  # Tier 3 — topical / opinionated (credibility = 0.4)
+  - name: Seeking Alpha Latest
+    url: https://seekingalpha.com/feed.xml
+    tier: 3
+    domain: seekingalpha.com
+  - name: Motley Fool
+    url: https://www.fool.com/feed/index.aspx
+    tier: 3
+    domain: fool.com
+  - name: MarketWatch Top
+    url: https://feeds.marketwatch.com/marketwatch/topstories/
+    tier: 3
+    domain: marketwatch.com
