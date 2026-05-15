@@ -65,6 +65,12 @@ def _get_news_retriever():
     return _build_retriever(chroma_dir, collection_name)
 
 
+def _get_finfact_retriever():
+    chroma_dir = os.environ["FINFACT_CHROMA_DIR"]
+    collection_name = os.environ.get("FINFACT_COLLECTION", "finfact_evidence_v0")
+    return _build_retriever(chroma_dir, collection_name)
+
+
 def retrieve(
     query: str,
     k: int = 5,
@@ -91,6 +97,8 @@ def retrieve(
     """
     if collection == "news":
         retriever = _get_news_retriever()
+    elif collection == "finfact":
+        retriever = _get_finfact_retriever()
     else:
         retriever = _get_default_retriever()
 

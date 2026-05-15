@@ -30,9 +30,20 @@ def main() -> None:
     parser.add_argument("--n", type=int, default=50)
     parser.add_argument("--k", type=int, default=4)
     parser.add_argument("--finfact", default="data/finfact/raw/finfact.json")
+    parser.add_argument(
+        "--collection",
+        choices=["news", "finfact"],
+        default="finfact",
+        help="news = crag_fin_news_v0 (Day 2 seed); finfact = finfact_evidence_v0 (Day 11 aligned)",
+    )
     parser.add_argument("--out", required=True)
     args = parser.parse_args()
 
+    # Force HF cache-only so the underlying SentenceTransformer / cross-encoder
+    # don't silently hang on an unauthenticated rate-limit retry. The models
+    # are already cached locally from Day 1-2 runs.
+    os.environ.setdefault("HF_HUB_OFFLINE", "1")
+    os.environ.setdefault("TRANSFORMERS_OFFLINE", "1")
     load_dotenv()
     # Import after .env so OLLAMA_* models are visible to the pipeline.
     from crag_fin.pipeline import verify_claim
@@ -49,7 +60,7 @@ def main() -> None:
         for i, row in enumerate(claims, 1):
             claim = row["claim"]
             gold = row.get("label", "NEI")
-            cv = verify_claim(claim, k=args.k, weighted=weighted, collection="news")
+            cv = verify_claim(claim, k=args.k, weighted=weighted, collection=args.collection)
             record = {
                 "i": i,
                 "claim": claim,
@@ -69,15 +80,20 @@ def main() -> None:
                 ],
             }
             f.write(json.dumps(record) + "\n")
+            f.flush()  # let `tail -f` see progress without waiting for 8KB buffer
             elapsed = time.time() - started
             if i % 5 == 0 or i == len(claims):
-                print(f"  [{i}/{len(claims)}] {elapsed:6.1f}s | last={cv.label} | {claim[:60]}")
+                print(
+                    f"  [{i}/{len(claims)}] {elapsed:6.1f}s | last={cv.label} | {claim[:60]}",
+                    flush=True,
+                )
 
     manifest = {
         "mode": args.mode,
         "n": len(claims),
         "k": args.k,
         "weighted": weighted,
+        "collection": args.collection,
         "finfact_path": args.finfact,
         "decomposer_model": os.environ.get("OLLAMA_DECOMPOSER_MODEL"),
         "reasoner_model": os.environ.get("OLLAMA_REASONER_MODEL"),
