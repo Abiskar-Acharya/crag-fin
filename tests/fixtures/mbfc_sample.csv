@@ -1,7 +1,0 @@
-domain,mbfc_factual_reporting,mbfc_bias_label,mbfc_url
-reuters.com,VERY_HIGH,LEAST_BIASED,https://mediabiasfactcheck.com/reuters/
-bbc.co.uk,HIGH,LEFT_CENTER,https://mediabiasfactcheck.com/bbc/
-breitbart.com,LOW,RIGHT,https://mediabiasfactcheck.com/breitbart/
-infowars.com,VERY_LOW,CONSPIRACY_PSEUDOSCIENCE,https://mediabiasfactcheck.com/infowars/
-naturalnews.com,VERY_LOW,RIGHT,https://mediabiasfactcheck.com/natural-news/
-example-unknown.com,GARBAGE_LABEL,LEFT,https://mediabiasfactcheck.com/example/

@@ -45,8 +45,6 @@ A claim flows through five stages:
 4. Calibrate. Wrap verdicts in an abstain decision. Currently a hard threshold; a conformal layer with an FCA-asymmetric loss is planned.
 5. Audit. Re-run under role-conditioned prompts to measure verdict drift (PRISM-style). Scaffolded, not yet wired.
 
-See [docs/architecture.md](docs/architecture.md) for the full design.
-
 ## Quick start
 
 ```bash
@@ -113,8 +111,6 @@ Runs are deterministic where it matters: all LLM calls use `temperature=0.0`, an
 | MBFC tier list | Media Bias / Fact Check | Source-credibility prior |
 | UK FCA notices | FCA website | UK-regulated finance corpus (built locally) |
 
-See [data/README.md](data/README.md) for provenance and licensing.
-
 ## Reuse
 
 - Built on [ArXivMind](https://github.com/Abiskar-Acharya/glm-rag-pipeline) for the retrieval substrate.
@@ -125,7 +121,7 @@ See [data/README.md](data/README.md) for provenance and licensing.
 
 Abiskar Acharya · abiskaracharya1@gmail.com · [github.com/Abiskar-Acharya](https://github.com/Abiskar-Acharya)
 
-MIT License. See [LICENSE](LICENSE).
+MIT License.
 
 ## Citing
 
