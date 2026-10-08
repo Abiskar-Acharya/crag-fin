@@ -59,3 +59,9 @@ chroma_db/
 dist/
 build/
 *.egg
+
+# Agent-instruction / internal runbook files are local-only, never pushed
+AGENTS.md
+CLAUDE.md
+.claude/
+docs/RUNBOOK.md
