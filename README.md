@@ -2,8 +2,6 @@
 
 A calibrated, source-credibility-weighted, retrieval-augmented verifier for financial claims. You give it a financial statement; it returns TRUE, FALSE, or ABSTAIN with cited evidence.
 
-> Status: research prototype, Phase 1-2 (May 2026). Not production software. Some components (conformal calibration, bias audit) are scaffolded but not yet wired.
-
 ## What it does
 
 The system reads a claim like *"GameStop bid $100B for eBay"* and decides whether the evidence supports it. It breaks the claim into atomic propositions, retrieves evidence weighted by how credible each source is, reasons over that evidence, and either commits to a verdict or abstains when it can't ground an answer.
@@ -35,13 +33,7 @@ The only committed eval run is small and, frankly, unflattering: on 20 Fin-Fact 
 | uniform | 20 | 0.133 | 0.250 | 100% |
 | weighted | 20 | 0.133 | 0.250 | 100% |
 
-That 100% abstention is the reasoner refusing to commit when the retrieved evidence doesn't clearly support or contradict a claim. Treat the table above as a baseline to beat, not a headline. Regenerate the figures after any run with:
-
-```bash
-python -m experiments.scripts.make_plots
-```
-
-Figures land in `paper/figures/` (`confusion.png`, `uniform_vs_weighted.png`). A risk-coverage curve gets added once the calibrator emits confidence scores.
+That 100% abstention is the reasoner refusing to commit when the retrieved evidence doesn't clearly support or contradict a claim. Treat the table above as a baseline to beat, not a headline.
 
 ## How it works
 
@@ -88,7 +80,7 @@ Everything above runs against local Ollama models. A pluggable backend (hosted D
 
 This does not yet clone-and-run from scratch, and I'd rather say so than pretend. Two real dependencies:
 
-- Retrieval reuses the external [ArXivMind / glm-rag-pipeline](https://github.com/Abiskar-Acharya/glm-rag-pipeline) repo. Point `ARXIVMIND_REPO` at a local checkout before running the pipeline.
+- Retrieval reuses the external [ArXivMind / glm-rag-pipeline](https://github.com/Abiskar-Acharya/glm-rag-pipeline) repo.
 - Large data and vector indexes are gitignored. `python scripts/setup_data.py` fetches Fin-Fact and seeds the ChromaDB indexes; it's idempotent and skips work already done.
 
 Runs are deterministic where it matters: all LLM calls use `temperature=0.0`, and each run writes a `manifest.json` recording mode, sample size, models, and elapsed time. Metrics are computed from the raw `predictions.jsonl` and saved before any plotting.
